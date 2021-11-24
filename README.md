@@ -1,0 +1,1 @@
+# asset-additional-resource-generator
