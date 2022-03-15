@@ -4,7 +4,8 @@ import pkg, { Canvas } from 'canvas';
 const { createCanvas, loadImage, Image } = pkg;
 import xlsx from 'xlsx';
 
-const assetInfoFile = '/Users/jang-youngjoon/PLAV/에셋 엑셀파일/구찌(완)/구찌_핸드백.xlsx';
+const assetInfoFile =
+    '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 엑셀파일/버버리(완)/버버리_백.xlsx';
 const sampleImage = xlsx.readFile(assetInfoFile);
 const sheetName = sampleImage.SheetNames[0];
 const firstSheet = sampleImage.Sheets[sheetName];
@@ -12,17 +13,17 @@ const firstSheet = sampleImage.Sheets[sheetName];
 const generateAdditionalResource = () => {
     return new Promise(async (resolve) => {
         // 사진 위치 directory
-        const directory = '/Users/jang-youngjoon/PLAV/에셋 엑셀파일/에셋 이미지/누끼 완료/구찌';
+        const directory = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/버버리_renamed(완료)';
         const files = fs.readdirSync(directory);
 
         //excel에서 column length 구하여 최대 범위 작성해야 함
         //350 까지 진행 완료
-        for (let i = 385; i < 386; i++) {
+        for (let i = 126; i < 127; i++) {
             const assetIdList = [];
-            const assetIdCellNum = 'E' + i; //고유 번호가 들어가 있는 셀 넘버
+            const assetIdCellNum = 'D' + i; //고유 번호가 들어가 있는 셀 넘버
             const assetId = firstSheet[assetIdCellNum].v;
             const filename = `${assetId}_additionalResource.png`; //저장할 파일 이름
-            const filepath = `/Users/jang-youngjoon/PLAV/에셋 엑셀파일/에셋 이미지/additionalResource/구찌-additionalResource/${filename}`; //저장할 파일 경로
+            const filepath = `/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/additionalResource/버버리-additionalResource/${filename}`; //저장할 파일 경로
             for (let j = 0; j < files.length; j += 1) {
                 if (files[j].includes(assetId)) {
                     assetIdList.push(files[j]);
@@ -34,7 +35,7 @@ const generateAdditionalResource = () => {
                 // 에셋 이미지가 순서대로 있는 지 확인
                 let assetImageListLen = assetIdList.length;
                 for (let i = 1; i < 4; i++) {
-                    const assetImageName = '__' + assetId + `_${i}`; //에셋 이미지 이름
+                    const assetImageName = assetId + `_${i}`; //에셋 이미지 이름
                     if (fs.existsSync(`${directory}/${assetImageName}.png`) === false) {
                         assetImageListLen += 1;
                     }
@@ -55,7 +56,7 @@ const generateAdditionalResource = () => {
 
                 let index = 0;
                 for (let i = 1; i < assetImageListLen + 1; i++) {
-                    const assetImageName = '__' + assetId + `_${i}`;
+                    const assetImageName = assetId + `_${i}`;
                     if (fs.existsSync(`${directory}/${assetImageName}.png`) === true) {
                         let resource = await loadImage(`${directory}/${assetImageName}.png`);
                         let wrh = resource.width / resource.height; //비율 : 가로/높이
