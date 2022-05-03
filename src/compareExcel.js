@@ -1,18 +1,16 @@
+// 엑셀 파일 비교
 import path from 'path';
 import xlsx from 'xlsx';
-import Excel from 'exceljs';
-import { execFile } from 'child_process';
 
-const assetInfoFileRoot = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 엑셀파일';
-
-const pastAssetInfoFile = path.join(assetInfoFileRoot, '구찌(완)/구찌_핸드백.xlsx');
+const assetInfoRootFile = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 엑셀파일'; // 에셋 정보를 저장하는 뿌리 파일
+const pastAssetInfoFile = path.join(assetInfoRootFile, '구찌(완)/구찌_핸드백.xlsx'); // 뿌리 파일 안에 있는 엑셀 파일명
 const pastAssetInfo = xlsx.readFile(pastAssetInfoFile);
-const sheetName1 = pastAssetInfo.SheetNames[0];
+const sheetName1 = pastAssetInfo.SheetNames[0]; // 시트 지정
 const sheet1 = pastAssetInfo.Sheets[sheetName1];
 
-const assetInfoFile = path.join(assetInfoFileRoot, '구찌(완)/구찌-210111.xlsx');
+const assetInfoFile = path.join(assetInfoRootFile, '구찌(완)/구찌-210111.xlsx'); // 뿌리 파일 안에 있는 엑셀 파일명
 const assetInfo = xlsx.readFile(assetInfoFile);
-const sheetName2 = assetInfo.SheetNames[0];
+const sheetName2 = assetInfo.SheetNames[0]; // 시트 지정
 const sheet2 = assetInfo.Sheets[sheetName2];
 
 let sheet1CellCount;
@@ -22,7 +20,7 @@ const sheet2AssetList = [];
 const discardedAssetCellNameList = [];
 const addedAssetCellNameList = [];
 
-// 과거 등록된 파일의 셀의 개수가 몇 개인 지 검사
+// 과거 등록된 파일의 셀의 개수가 몇 개인지 검사
 for (let i = 1; i++; ) {
     const cellName = 'B' + i;
     if (sheet1[cellName] === undefined) {
@@ -34,22 +32,7 @@ for (let i = 1; i++; ) {
 
 console.log(sheet2);
 
-// const wb = new Excel.Workbook();
-// const ws = wb.addWorksheet();
-
-// const workbook2 = new Excel.Workbook();
-// workbook2.xlsx.readFile(assetInfo).then(() => {
-//     const worksheet = workbook2.getWorksheet();
-//     const lastRowNum = sheet1CellCount;
-//     worksheet.eachRow((row, rowNum) => {
-//         if (rowNum !== lastRowNum) {
-//             const r = ws.addRow();
-//             Object.assign(r, row);
-//         }
-//     });
-// });
-
-// 새로 등록된 파일의 셀의 개수가 몇 개인 지 검사
+// 새로 등록된 파일의 셀의 개수가 몇 개인지 검사
 for (let i = 1; i++; ) {
     const cellName = 'B' + i;
     if (sheet2[cellName] === undefined) {
@@ -86,18 +69,3 @@ for (let i = 0; i < sheet2CellCount - 1; i++) {
         // console.log(sheet2AssetList[i], '추가됨');
     }
 }
-
-// console.log(discardedAssetList);
-// console.log(addedAssetList);
-
-// const checkExcel = () => {
-//     const cell = 'B';
-//     for (let i = 2; i < 308; i++) {
-//         const cellName = cell + i;
-//         if (sheet1[cellName].v !== sheet2[cellName].v) {
-//             console.log(cellName);
-//         }
-//     }
-// };
-// checkExcel();
-// console.log(firstSheet1.B2.v);

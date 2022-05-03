@@ -1,5 +1,7 @@
+// 엑셀 파일에 있는 에셋을 모두 보유하고 있는지 체크
 import fs from 'fs';
 import xlsx from 'xlsx';
+
 const assetInfoFile =
     '/Users/jang-youngjoon/PLAV/에셋 엑셀파일/루이비통(완)/루이비통_핸드백.xlsx';
 const sampleImage = xlsx.readFile(assetInfoFile);
@@ -23,7 +25,7 @@ const checkExists = () => {
             }
 
             for (let i = 1; i < assetIdList.length + 1; i++) {
-                const assetImageName = '__' + assetId + `_${i}`; //에셋 이미지 이름
+                const assetImageName = '__' + assetId + `_${i}`; //에셋 이미지 이름, 앞의 __는 에셋별 특정 이미지 이름
                 if (fs.existsSync(`${directory}/${assetImageName}.png`) === false) {
                     missingAssetFileList.push(assetImageName);
                 }

@@ -1,7 +1,4 @@
-from os import openpty
-from random import seed
-from turtle import shearfactor
-from openpyxl import Workbook
+# 엑셀 파일에 업데이트 된 사항 확인
 import openpyxl
 from openpyxl.styles import PatternFill, Color
 

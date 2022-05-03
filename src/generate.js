@@ -1,29 +1,27 @@
-import os from 'os';
+// 세로형 이미지 생성
 import fs from 'fs';
 import pkg, { Canvas } from 'canvas';
-const { createCanvas, loadImage, Image } = pkg;
 import xlsx from 'xlsx';
+const { createCanvas, loadImage, Image } = pkg;
 
 const assetInfoFile =
-    '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 엑셀파일/버버리(완)/버버리_백.xlsx';
+    '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 엑셀파일/버버리(완)/버버리_백.xlsx'; // 엑셀 파일의 주소
 const sampleImage = xlsx.readFile(assetInfoFile);
-const sheetName = sampleImage.SheetNames[0];
+const sheetName = sampleImage.SheetNames[0]; // 읽을 시트 넘버
 const firstSheet = sampleImage.Sheets[sheetName];
 
 const generateAdditionalResource = () => {
     return new Promise(async (resolve) => {
-        // 사진 위치 directory
-        const directory = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/버버리_renamed(완료)';
+        const directory = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/버버리_renamed(완료)'; // 사진 위치 directory
         const files = fs.readdirSync(directory);
+        const columnLength = 128; // 해당 셀의 개수
 
-        //excel에서 column length 구하여 최대 범위 작성해야 함
-        //350 까지 진행 완료
-        for (let i = 126; i < 127; i++) {
+        for (let i = 1; i < columnLength; i++) {
             const assetIdList = [];
-            const assetIdCellNum = 'D' + i; //고유 번호가 들어가 있는 셀 넘버
+            const assetIdCellNum = 'D' + i; // 에셋의 고유 번호가 들어가 있는 셀 넘버
             const assetId = firstSheet[assetIdCellNum].v;
-            const filename = `${assetId}_additionalResource.png`; //저장할 파일 이름
-            const filepath = `/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/additionalResource/버버리-additionalResource/${filename}`; //저장할 파일 경로
+            const filename = `${assetId}_additionalResource.png`; // 저장할 파일 이름
+            const filepath = `/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/additionalResource/버버리-additionalResource/${filename}`; //저장할 파일 경로 + 파일명
             for (let j = 0; j < files.length; j += 1) {
                 if (files[j].includes(assetId)) {
                     assetIdList.push(files[j]);
@@ -89,4 +87,6 @@ const generateAdditionalResource = () => {
         }
     });
 };
+
+//실행
 generateAdditionalResource();

@@ -1,6 +1,6 @@
+// webp 이미지를 png로 변환
 import sharp from 'sharp';
 import fs from 'fs';
-import xlsx from 'xlsx';
 
 const webpPlacedDir = '/Users/jang-youngjoon/PLAV/PLAV 에셋 /에셋 이미지/asset/누끼 이전/발렌티노';
 const pngPlacedDir =
